@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.graph.GrafoSocial;
 import org.example.model.Usuario;
+import org.example.model.Grupo;
 
 import java.util.*;
 
@@ -9,6 +10,9 @@ public class RedSocialService {
 
     private final Map<String, Usuario> usuarios = new HashMap<>();
     private final GrafoSocial grafo = new GrafoSocial();
+
+    // Lista donde se almacenan los grupos creados en la red social
+    private final List<Grupo> grupos = new ArrayList<>();
 
     private String norm(String username) {
         if (username == null) return null;
@@ -82,4 +86,20 @@ public class RedSocialService {
         if (key == null) return Optional.empty();
         return Optional.ofNullable(usuarios.get(key));
     }
+
+    // Permite crear un nuevo grupo
+    public void agregarGrupo(Grupo grupo) {
+        if (grupo == null) {
+            throw new IllegalArgumentException("El grupo no puede ser nulo.");
+        }
+        grupos.add(grupo);
+    }
+
+    // Retorna la lista de grupos registrados
+    public List<Grupo> getGrupos() {
+        // Usamos unmodifiableList para evitar que otra parte del programa haga: service.getGrupos().clear(); y borre todos los grupos.
+        return Collections.unmodifiableList(grupos);
+    }
+
+
 }
