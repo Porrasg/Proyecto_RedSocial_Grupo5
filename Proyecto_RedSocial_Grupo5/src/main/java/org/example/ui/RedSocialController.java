@@ -12,6 +12,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -19,7 +22,7 @@ import java.util.*;
 
 import org.example.model.Usuario;
 import org.example.service.RedSocialService;
-
+import org.example.ui.AvatarUtils;
 public class RedSocialController implements Initializable {
 
     @FXML
@@ -31,6 +34,19 @@ public class RedSocialController implements Initializable {
     private String selectedUser = null;
     private MouseButton selectedMode = null;
 
+    @FXML
+    private void onVolverMenu() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/menu.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            Stage stage = (Stage) graphPane.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo volver al menú: " + e.getMessage());
+        }
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         renderGraph();
@@ -105,7 +121,7 @@ public class RedSocialController implements Initializable {
         Circle circle = new Circle(x, y, radius);
         circle.setFill(Color.WHITE);
         circle.setStroke(borderColor);
-        circle.setStrokeWidth(3);
+        circle.setStrokeWidth(2);
 
         ImageView avatar = createAvatar(user, x, y, radius);
 
@@ -124,8 +140,8 @@ public class RedSocialController implements Initializable {
         Image img = loadAvatar(user);
 
         ImageView view = new ImageView(img);
-        view.setFitWidth(radius * 1.4);
-        view.setFitHeight(radius * 1.4);
+        view.setFitWidth(radius * 1.9);
+        view.setFitHeight(radius * 1.9);
 
         view.setLayoutX(x - (view.getFitWidth() / 2));
         view.setLayoutY(y - (view.getFitHeight() / 2));
@@ -133,7 +149,7 @@ public class RedSocialController implements Initializable {
         Circle clip = new Circle(
                 view.getFitWidth() / 2,
                 view.getFitHeight() / 2,
-                radius * 0.65
+                radius * 0.78
         );
 
         view.setClip(clip);
@@ -143,16 +159,7 @@ public class RedSocialController implements Initializable {
     }
 
     private Image loadAvatar(Usuario user) {
-        try {
-            String path = getAvatarPath(user);
-
-            if (path != null) {
-                InputStream stream = getClass().getResourceAsStream(path);
-                if (stream != null) return new Image(stream);
-            }
-        } catch (Exception ignored) {}
-
-        return new Image("https://via.placeholder.com/80");
+        return AvatarUtils.getAvatarImage(user.getAvatarType());
     }
 
     private void handleClick(String clicked, MouseButton button) {

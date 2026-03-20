@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.image.ImageView?>
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.example.ui.NewUserController"
@@ -40,6 +41,16 @@
 
         <Label text="Avatar:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
         <ComboBox fx:id="cbAvatar" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+        <Label text="Avatar:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbAvatar" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+        <Label text="Vista previa:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <ImageView fx:id="imgAvatarPreview"
+                   fitWidth="80"
+                   fitHeight="80"
+                   preserveRatio="true"
+                   GridPane.rowIndex="7"
+                   GridPane.columnIndex="1"/>
     </GridPane>
 
     <HBox spacing="10">

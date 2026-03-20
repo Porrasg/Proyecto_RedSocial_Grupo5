@@ -10,7 +10,8 @@ import org.example.service.RedSocialService;
 import org.example.validation.UserValidator;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import javafx.scene.image.ImageView;
+import org.example.ui.AvatarUtils;
 import java.io.IOException;
 
 public class NewUserController {
@@ -32,6 +33,8 @@ public class NewUserController {
     private ComboBox<AvatarType> cbAvatar;
     @FXML
     private Label lblStatus;
+    @FXML
+    private ImageView imgAvatarPreview;
 
 
     private final RedSocialService service = AppState.getService();
@@ -41,6 +44,10 @@ public class NewUserController {
         cbAvatar.getItems().setAll(AvatarType.MASCULINO, AvatarType.FEMENINO, AvatarType.PREDETERMINADO);
         cbAvatar.setValue(AvatarType.PREDETERMINADO);
         lblStatus.setText("");
+
+        actualizarPreviewAvatar();
+
+        cbAvatar.setOnAction(event -> actualizarPreviewAvatar());
     }
 
     @FXML
@@ -122,7 +129,9 @@ public class NewUserController {
         a.setContentText(msg);
         a.showAndWait();
     }
-
+    private void actualizarPreviewAvatar() {
+        imgAvatarPreview.setImage(AvatarUtils.getAvatarImage(cbAvatar.getValue()));
+    }
     private void showError(String title, String msg) {
         Alert a = new Alert(Alert.AlertType.ERROR);
         a.setTitle(title);
