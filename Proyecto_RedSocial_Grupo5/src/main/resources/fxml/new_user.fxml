@@ -45,6 +45,7 @@
     <HBox spacing="10">
         <Button text="Guardar" onAction="#onGuardar"/>
         <Button text="Limpiar" onAction="#onLimpiar"/>
+        <Button text="Volver" onAction="#onVolver"/>
     </HBox>
 
     <Label fx:id="lblStatus" />

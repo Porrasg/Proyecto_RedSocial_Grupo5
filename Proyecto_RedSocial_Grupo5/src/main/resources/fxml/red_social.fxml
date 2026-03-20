@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.ui.RedSocialController">
+
+    <center>
+        <AnchorPane fx:id="graphPane"
+                    prefWidth="900.0"
+                    prefHeight="600.0"
+                    style="-fx-background-color: white;"/>
+    </center>
+
+    <bottom>
+        <Label text="Click izquierdo: crear amistad | Click derecho: eliminar amistad"
+               style="-fx-padding: 10; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+    </bottom>
+
+</BorderPane>

@@ -2,6 +2,7 @@ package org.example.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
+
 import org.example.model.Grupo;
 
 public class Usuario {
@@ -35,16 +36,41 @@ public class Usuario {
     }
 
     // Getters para acceder a los datos del usuario
-    public String getUsername() { return username; }
-    public String getPassword() { return password; }
-    public String getPrimerNombre() { return primerNombre; }
-    public String getPrimerApellido() { return primerApellido; }
-    public String getSegundoApellido() { return segundoApellido; }
-    public LocalDate getFechaNacimiento() { return fechaNacimiento; }
-    public AvatarType getAvatarType() { return avatarType; }
-    public Grupo getGrupo() { return grupo; } // Obtener el grupo del usuario
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPrimerNombre() {
+        return primerNombre;
+    }
+
+    public String getPrimerApellido() {
+        return primerApellido;
+    }
+
+    public String getSegundoApellido() {
+        return segundoApellido;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public AvatarType getAvatarType() {
+        return avatarType;
+    }
+
+    public Grupo getGrupo() {
+        return grupo;
+    } // Obtener el grupo del usuario
 
 
     // Asignar o cambiar el grupo del usuario
-    public void setGrupo(Grupo grupo) { this.grupo = grupo; }
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
+    }
 }

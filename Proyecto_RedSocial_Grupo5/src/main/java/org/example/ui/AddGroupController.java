@@ -9,9 +9,9 @@ import org.example.service.RedSocialService;
 public class AddGroupController {
 
     // Campos de la interfaz
-    @FXML private TextField txtNombreGrupo;
-    @FXML private ColorPicker cpColor;
-    @FXML private Label lblStatus;
+    private TextField txtNombreGrupo;
+    private ColorPicker cpColor;
+    private Label lblStatus;
 
     // Obtengo la instancia del servicio que maneja la lógica de la red social.
     private final RedSocialService service = AppState.getService();

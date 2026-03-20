@@ -1,23 +1,37 @@
 package org.example.ui;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import org.example.model.AvatarType;
 import org.example.model.Usuario;
 import org.example.service.RedSocialService;
 import org.example.validation.UserValidator;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class NewUserController {
 
     // Campos de UI (FXML IDs)
-    @FXML private TextField txtUsername;
-    @FXML private PasswordField txtPassword;
-    @FXML private TextField txtPrimerNombre;
-    @FXML private TextField txtPrimerApellido;
-    @FXML private TextField txtSegundoApellido;
-    @FXML private DatePicker dpFechaNacimiento;
-    @FXML private ComboBox<AvatarType> cbAvatar;
-    @FXML private Label lblStatus;
+    @FXML
+    private TextField txtUsername;
+    @FXML
+    private PasswordField txtPassword;
+    @FXML
+    private TextField txtPrimerNombre;
+    @FXML
+    private TextField txtPrimerApellido;
+    @FXML
+    private TextField txtSegundoApellido;
+    @FXML
+    private DatePicker dpFechaNacimiento;
+    @FXML
+    private ComboBox<AvatarType> cbAvatar;
+    @FXML
+    private Label lblStatus;
 
 
     private final RedSocialService service = AppState.getService();
@@ -86,6 +100,19 @@ public class NewUserController {
         txtSegundoApellido.clear();
         dpFechaNacimiento.setValue(null);
         cbAvatar.setValue(AvatarType.PREDETERMINADO);
+    }
+    @FXML
+    private void onVolver() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/menu.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            Stage stage = (Stage) txtUsername.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            showError("Error", "No se pudo volver al menú: " + e.getMessage());
+        }
     }
 
     private void showInfo(String title, String msg) {

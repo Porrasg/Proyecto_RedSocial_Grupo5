@@ -69,7 +69,7 @@ public class RedSocialService {
     }
 
     // Para Integrante 3
-    public Set<String> getFriends(String username) {
+    public Set<Object> getFriends(String username) {
         String key = norm(username);
         if (key == null) return Set.of();
         return Collections.unmodifiableSet(new HashSet<>(grafo.getAmigos(key)));

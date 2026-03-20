@@ -9,8 +9,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/new_user.fxml"));
-
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/new_user.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/menu.fxml"));
         /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/add_group.fxml"));*/
 
         Scene scene = new Scene(loader.load(), 520, 420);
