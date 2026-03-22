@@ -54,6 +54,12 @@
     -->
     <Button text="Guardar Grupo"
             onAction="#onGuardarGrupo"/>
+    <!--
+            Botón que ejecuta la acción de volver a menú principal.
+            onAction llama al método onVolver() del controller.
+        -->
+    <Button text="Volver"
+            onAction="#onVolver"/>
 
     <!--
         Label que uso para mostrar mensajes al usuario

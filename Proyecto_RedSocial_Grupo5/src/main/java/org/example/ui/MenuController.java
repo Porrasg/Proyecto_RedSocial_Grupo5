@@ -16,6 +16,11 @@ public class MenuController {
     }
 
     @FXML
+    private void irCrearGrupo(ActionEvent event) throws IOException {
+        cambiarPantalla(event, "/fxml/add_group.fxml");
+    }
+
+    @FXML
     private void irRedSocial(ActionEvent event) throws IOException {
         cambiarPantalla(event, "/fxml/red_social.fxml");
     }
@@ -27,10 +32,16 @@ public class MenuController {
 
     private void cambiarPantalla(ActionEvent event, String rutaFXML) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
-        Scene scene = new Scene(loader.load());
+        Scene scene = new Scene(loader.load(), 900, 600); //Tamaño fijo de la pantalla
 
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
+
+        stage.setWidth(900);
+        stage.setHeight(600);
+
+        stage.setResizable(false); // evita que cambie tamaño
+
         stage.show();
     }
 }

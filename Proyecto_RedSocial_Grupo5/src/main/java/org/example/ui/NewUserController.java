@@ -112,7 +112,7 @@ public class NewUserController {
     private void onVolver() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/menu.fxml"));
-            Scene scene = new Scene(loader.load());
+            Scene scene = new Scene(loader.load(), 900, 600); // Tamaño fijo
 
             Stage stage = (Stage) txtUsername.getScene().getWindow();
             stage.setScene(scene);

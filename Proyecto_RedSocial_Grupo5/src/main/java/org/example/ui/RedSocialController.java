@@ -38,7 +38,7 @@ public class RedSocialController implements Initializable {
     private void onVolverMenu() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/menu.fxml"));
-            Scene scene = new Scene(loader.load());
+            Scene scene = new Scene(loader.load(), 900, 600); // Tamaño fijo
 
             Stage stage = (Stage) graphPane.getScene().getWindow();
             stage.setScene(scene);

@@ -5,12 +5,22 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import org.example.model.Grupo;
 import org.example.service.RedSocialService;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import java.io.IOException;
 
 public class AddGroupController {
 
     // Campos de la interfaz
+    @FXML
     private TextField txtNombreGrupo;
+
+    @FXML
     private ColorPicker cpColor;
+
+    @FXML
     private Label lblStatus;
 
     // Obtengo la instancia del servicio que maneja la lógica de la red social.
@@ -68,6 +78,21 @@ public class AddGroupController {
             // que pueda ocurrir al crear o guardar el grupo
             showError("Error", "Error inesperado: " + ex.getMessage());
             lblStatus.setText("Error inesperado.");
+        }
+    }
+
+    @FXML
+    private void onVolver(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/menu.fxml"));
+            Scene scene = new Scene(loader.load(), 900, 600); // tamaño fijo
+
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setResizable(false);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
