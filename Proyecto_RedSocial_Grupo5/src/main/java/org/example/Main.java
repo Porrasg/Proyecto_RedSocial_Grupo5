@@ -11,7 +11,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/menu.fxml"));
 
-        Scene scene = new Scene(loader.load(), 520, 420);
+        Scene scene = new Scene(loader.load(), 900, 600);
 
         stage.setTitle("Proyecto Red Social - Nuevo Usuario");
         stage.setScene(scene);
