@@ -5,9 +5,8 @@
 <?import javafx.scene.layout.VBox?>
 
 <!--
-    Contenedor principal de la vista.
-    Uso un VBox porque quiero que los elementos se acomoden verticalmente
-    uno debajo del otro con un espacio entre ellos.
+    Vista para agregar un nuevo grupo.
+    Permite ingresar nombre, seleccionar color y guardar el grupo.
 -->
 
 <VBox spacing="15" alignment="CENTER"
@@ -15,56 +14,35 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.example.ui.AddGroupController">
 
-    <!--
-        Padding del contenedor.
-        Esto agrega espacio interno entre los bordes de la ventana
-        y los componentes para que no queden pegados.
-    -->
+    <!-- Espaciado interno -->
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <!--
-        Título de la pantalla.
-        Solo es un Label visual para indicar que esta vista es para crear grupos.
-        Le aumento el tamaño de fuente y lo pongo en negrita con CSS.
-    -->
+    <!-- Título -->
     <Label text="Agregar Grupo"
            style="-fx-font-size:18px; -fx-font-weight:bold;" />
 
-    <!--
-        Campo donde el usuario escribe el nombre del grupo.
-        fx:id conecta este componente con el controller (txtNombreGrupo).
-        promptText es el texto gris que aparece como sugerencia.
-    -->
+    <!-- Campo de nombre -->
     <TextField fx:id="txtNombreGrupo"
                promptText="Nombre del grupo"
                maxWidth="250"/>
 
-    <!--
-        Selector de color para elegir el color del grupo.
-        También está conectado al controller con fx:id = cpColor.
-    -->
+    <!-- Selector de color -->
     <ColorPicker fx:id="cpColor"
                  maxWidth="250"/>
 
-    <!--
-        Botón que ejecuta la acción de guardar el grupo.
-        onAction llama al método onGuardarGrupo() del controller.
-    -->
+    <!-- Botón guardar -->
     <Button text="Guardar Grupo"
             onAction="#onGuardarGrupo"/>
-    <!--
-            Botón que ejecuta la acción de volver a menú principal.
-            onAction llama al método onVolver() del controller.
-        -->
+
+    <!-- Botón volver -->
     <Button text="Volver"
             onAction="#onVolver"/>
 
     <!--
         Label que uso para mostrar mensajes al usuario
         (por ejemplo confirmación o errores).
-        Está conectado al controller como lblStatus.
     -->
     <Label fx:id="lblStatus"/>
 

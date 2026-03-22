@@ -73,4 +73,19 @@ public class Usuario {
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
     }
+
+    // Representación en texto del objeto Usuario.
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", primerNombre='" + primerNombre + '\'' +
+                ", primerApellido='" + primerApellido + '\'' +
+                ", segundoApellido='" + segundoApellido + '\'' +
+                ", fechaNacimiento=" + fechaNacimiento +
+                ", avatarType=" + avatarType +
+                ", grupo=" + grupo +
+                '}';
+    }
 }

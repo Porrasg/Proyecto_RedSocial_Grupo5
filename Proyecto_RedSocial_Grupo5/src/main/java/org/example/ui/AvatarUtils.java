@@ -5,10 +5,14 @@ import org.example.model.AvatarType;
 
 import java.util.Objects;
 
+// Clase utilitaria para manejar la carga de imágenes de avatares.
 public final class AvatarUtils {
 
+    // Constructor privado para evitar instanciación.
     private AvatarUtils() {}
 
+    // Retorna la imagen correspondiente al tipo de avatar.
+    // Si el avatar es null o no coincide con ninguno, se usa una imagen por defecto.
     public static Image getAvatarImage(AvatarType avatarType) {
         String path;
 
@@ -23,6 +27,7 @@ public final class AvatarUtils {
             }
         }
 
+        // Carga la imagen desde recursos
         return new Image(Objects.requireNonNull(
                 AvatarUtils.class.getResourceAsStream(path),
                 "No se encontró la imagen: " + path

@@ -5,25 +5,36 @@ import org.example.model.Usuario;
 import org.example.model.Grupo;
 
 import java.util.*;
-
+// Clase de servicio que gestiona la lógica principal de la red social.
+// Se encarga de:
+// - Registrar usuarios
+// - Gestionar amistades (a través del grafo)
+// - Consultar usuarios y relaciones
+// - Manejar los grupos
 public class RedSocialService {
 
+    // Mapa de usuarios registrados (clave: username normalizado)
     private final Map<String, Usuario> usuarios = new HashMap<>();
+
+    //Grafo que almacena las relaciones de amistad
     private final GrafoSocial grafo = new GrafoSocial();
 
     // Lista donde se almacenan los grupos creados en la red social
     private final List<Grupo> grupos = new ArrayList<>();
 
+    // Normaliza un username (minúsculas y sin espacios).
     private String norm(String username) {
         if (username == null) return null;
         return username.trim().toLowerCase();
     }
 
+    // Verifica si un username ya existe en el sistema.
     public boolean existsUsername(String username) {
         String key = norm(username);
         return key != null && usuarios.containsKey(key);
     }
 
+    // Agrega un nuevo usuario al sistema. También lo registra dentro del grafo social.
     public void addUser(Usuario usuario) {
         String key = norm(usuario.getUsername());
         if (key == null || key.isBlank()) {
@@ -37,7 +48,8 @@ public class RedSocialService {
         grafo.addUsuario(usuario);
     }
 
-    // Para Integrante 2
+    // Crea una relación de amistad entre dos usuarios.
+    // Valida: - que los usuarios existan - que no sean el mismo usuario - que la amistad no exista previamente
     public void addFriend(String userA, String userB) {
         String a = norm(userA);
         String b = norm(userB);
@@ -60,7 +72,7 @@ public class RedSocialService {
         grafo.addAmistad(a, b);
     }
 
-    // (Opcional para Integrante 2)
+    // Elimina una relación de amistad entre dos usuarios.
     public void removeFriend(String userA, String userB) {
         String a = norm(userA);
         String b = norm(userB);
@@ -68,19 +80,21 @@ public class RedSocialService {
         grafo.removeAmistad(a, b);
     }
 
-    // Para Integrante 3
+    // Obtiene los amigos de un usuario.
     public Set<Object> getFriends(String username) {
         String key = norm(username);
         if (key == null) return Set.of();
         return Collections.unmodifiableSet(new HashSet<>(grafo.getAmigos(key)));
     }
 
+    // Retorna todos los usuarios registrados ordenados alfabéticamente.
     public List<Usuario> getAllUsers() {
         return usuarios.values().stream()
                 .sorted(Comparator.comparing(Usuario::getUsername, String.CASE_INSENSITIVE_ORDER))
                 .toList();
     }
 
+    // Busca un usuario por su username.
     public Optional<Usuario> findByUsername(String username) {
         String key = norm(username);
         if (key == null) return Optional.empty();

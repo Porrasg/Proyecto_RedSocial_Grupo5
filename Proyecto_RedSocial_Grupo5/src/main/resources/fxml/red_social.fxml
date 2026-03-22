@@ -6,20 +6,27 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
+<!--
+    Vista principal de la red social.
+    Muestra el grafo de usuarios y sus conexiones.
+-->
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.example.ui.RedSocialController">
 
+    <!-- Barra superior -->
     <top>
         <HBox spacing="10" style="-fx-padding: 10;">
             <Button text="Volver al menú" onAction="#onVolverMenu"/>
         </HBox>
     </top>
 
+    <!-- Área del grafo -->
     <center>
         <AnchorPane fx:id="graphPane" prefWidth="900" prefHeight="600"/>
     </center>
 
+    <!-- Instrucciones -->
     <bottom>
         <Label text="Click izquierdo: crear amistad | Click derecho: eliminar amistad"
                style="-fx-padding: 10; -fx-font-weight: bold;"/>

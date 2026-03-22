@@ -8,12 +8,12 @@ import org.example.model.AvatarType;
 import org.example.model.Usuario;
 import org.example.service.RedSocialService;
 import org.example.validation.UserValidator;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import org.example.ui.AvatarUtils;
 import java.io.IOException;
 
+// Controlador de la vista Nuevo Usuario
 public class NewUserController {
 
     // Campos de UI (FXML IDs)
@@ -36,20 +36,25 @@ public class NewUserController {
     @FXML
     private ImageView imgAvatarPreview;
 
-
+    // Servicio que maneja la lógica de la aplicación
     private final RedSocialService service = AppState.getService();
 
+    // Inicializa la vista al cargarse.
     @FXML
     public void initialize() {
+        // Opciones del ComboBox de avatar
         cbAvatar.getItems().setAll(AvatarType.MASCULINO, AvatarType.FEMENINO, AvatarType.PREDETERMINADO);
+        // Valor por defecto
         cbAvatar.setValue(AvatarType.PREDETERMINADO);
         lblStatus.setText("");
 
         actualizarPreviewAvatar();
 
+        // Actualiza la imagen cuando cambia el avatar
         cbAvatar.setOnAction(event -> actualizarPreviewAvatar());
     }
 
+    // Maneja el botón Guardar
     @FXML
     private void onGuardar() {
         try {
@@ -98,6 +103,7 @@ public class NewUserController {
         }
     }
 
+    // Limpia todos los campos del formulario.
     @FXML
     private void onLimpiar() {
         txtUsername.clear();
@@ -108,6 +114,8 @@ public class NewUserController {
         dpFechaNacimiento.setValue(null);
         cbAvatar.setValue(AvatarType.PREDETERMINADO);
     }
+
+    // Regresa al menú principal.
     @FXML
     private void onVolver() {
         try {
@@ -122,6 +130,7 @@ public class NewUserController {
         }
     }
 
+    // Muestra mensaje informativo.
     private void showInfo(String title, String msg) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle(title);
@@ -129,9 +138,13 @@ public class NewUserController {
         a.setContentText(msg);
         a.showAndWait();
     }
+
+    // Actualiza la imagen de vista previa del avatar.
     private void actualizarPreviewAvatar() {
         imgAvatarPreview.setImage(AvatarUtils.getAvatarImage(cbAvatar.getValue()));
     }
+
+    // Muestra mensaje de error.
     private void showError(String title, String msg) {
         Alert a = new Alert(Alert.AlertType.ERROR);
         a.setTitle(title);

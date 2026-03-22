@@ -11,15 +11,17 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+// Controlador de la vista Agregar Grupo
 public class AddGroupController {
 
     // Campos de la interfaz
+    // Campo de texto para ingresar el nombre del grupo
     @FXML
     private TextField txtNombreGrupo;
-
+    // Selector de color para el grupo
     @FXML
     private ColorPicker cpColor;
-
+    // Label para mostrar mensajes al usuario
     @FXML
     private Label lblStatus;
 
@@ -33,6 +35,7 @@ public class AddGroupController {
         cpColor.setValue(Color.GRAY);  // Defino un color por defecto para el grupo
     }
 
+    // Maneja la acción del botón Guardar Grupo
     @FXML
     private void onGuardarGrupo() {
         try {
@@ -81,6 +84,7 @@ public class AddGroupController {
         }
     }
 
+    // Maneja la acción del botón Volver. Cambia la vista actual al menú principal.
     @FXML
     private void onVolver(ActionEvent event) {
         try {
