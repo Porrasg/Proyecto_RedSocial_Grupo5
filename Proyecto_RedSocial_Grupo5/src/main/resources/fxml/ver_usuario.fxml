@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane prefWidth="900" prefHeight="600"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.ui.VerUsuarioController">
+
+    <children>
+
+        <VBox spacing="15"
+              AnchorPane.topAnchor="20"
+              AnchorPane.leftAnchor="20"
+              AnchorPane.rightAnchor="20">
+
+            <!-- Título -->
+            <Label text="Ver / Editar Usuario"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold;" />
+
+            <!-- Selección  usuario -->
+            <HBox spacing="10">
+                <Label text="Seleccionar usuario:" />
+                <ComboBox fx:id="cbUsuarios" prefWidth="200"/>
+            </HBox>
+
+            <!-- Info del usuario -->
+            <GridPane hgap="10" vgap="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+
+                <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Label fx:id="lblUsername" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Label fx:id="lblNombre" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Apellidos:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <Label fx:id="lblApellidos" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Grupo actual:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <Label fx:id="lblGrupoActual" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <!-- Cambio de grupo -->
+            <HBox spacing="10">
+                <Label text="Asignar grupo:" />
+                <ComboBox fx:id="cbGrupos" prefWidth="200"/>
+            </HBox>
+
+            <!-- Botones -->
+            <HBox spacing="10">
+                <Button text="Guardar cambios" onAction="#onGuardar"/>
+                <Button text="Volver" onAction="#onVolver"/>
+            </HBox>
+
+            <!-- Estado -->
+            <Label fx:id="lblStatus" textFill="green"/>
+
+        </VBox>
+
+    </children>
+
+</AnchorPane>

@@ -28,7 +28,11 @@ public class MenuController {
     private void irRedSocial(ActionEvent event) throws IOException {
         cambiarPantalla(event, "/fxml/red_social.fxml");
     }
-
+    //Navega a la pantalla de visualización de usuario
+    @FXML
+    private void irVerUsuario(ActionEvent event) throws IOException {
+        cambiarPantalla(event, "/fxml/ver_usuario.fxml");
+    }
     // Cierra completamente la aplicación.
     @FXML
     private void salir() {

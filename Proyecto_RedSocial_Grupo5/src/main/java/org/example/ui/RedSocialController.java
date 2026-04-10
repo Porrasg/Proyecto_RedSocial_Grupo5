@@ -123,7 +123,7 @@ public class RedSocialController implements Initializable {
             String fromUser = user.getUsername();
 
             // Obtener amigos
-            Set<Object> friends = service.getFriends(fromUser);
+            Set<String> friends = service.getFriends(fromUser);
 
             if (friends == null || friends.isEmpty()) {
                 continue;

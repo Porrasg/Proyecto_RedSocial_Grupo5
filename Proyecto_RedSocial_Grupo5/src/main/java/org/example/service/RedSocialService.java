@@ -81,7 +81,7 @@ public class RedSocialService {
     }
 
     // Obtiene los amigos de un usuario.
-    public Set<Object> getFriends(String username) {
+    public Set<String> getFriends(String username) {
         String key = norm(username);
         if (key == null) return Set.of();
         return Collections.unmodifiableSet(new HashSet<>(grafo.getAmigos(key)));
@@ -108,7 +108,23 @@ public class RedSocialService {
         }
         grupos.add(grupo);
     }
+    // Asigna un grupo a un usuario
+    public void asignarGrupo(String username, String nombreGrupo) {
+        String key = norm(username);
 
+        if (key == null || !usuarios.containsKey(key)) {
+            throw new IllegalArgumentException("Usuario no existe.");
+        }
+
+        Usuario usuario = usuarios.get(key);
+
+        Grupo grupoEncontrado = grupos.stream()
+                .filter(g -> g.getNombre().equalsIgnoreCase(nombreGrupo))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Grupo no existe."));
+
+        usuario.setGrupo(grupoEncontrado);
+    }
     // Retorna la lista de grupos registrados
     public List<Grupo> getGrupos() {
         // Usamos unmodifiableList para evitar que otra parte del programa haga: service.getGrupos().clear(); y borre todos los grupos.

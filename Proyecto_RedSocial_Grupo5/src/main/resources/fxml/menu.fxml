@@ -22,9 +22,10 @@
            style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
     <!-- Opciones de menu -->
-    <Button text="Crear Usuario" onAction="#irCrearUsuario" prefWidth="200"/>
-    <Button text="Crear Grupo" onAction="#irCrearGrupo" prefWidth="200"/>
-    <Button text="Ver Red Social" onAction="#irRedSocial" prefWidth="200"/>
-    <Button text="Salir" onAction="#salir" prefWidth="200"/>
+    <Button text="1. Crear Usuario" onAction="#irCrearUsuario" prefWidth="200"/>
+    <Button text="2. Crear Grupo" onAction="#irCrearGrupo" prefWidth="200"/>
+    <Button text="3. Ver Red Social" onAction="#irRedSocial" prefWidth="200"/>
+    <Button text="4. Ver / Editar Usuario" onAction="#irVerUsuario" prefWidth="200"/>
+    <Button text="5. Salir" onAction="#salir" prefWidth="200"/>
 
 </VBox>
