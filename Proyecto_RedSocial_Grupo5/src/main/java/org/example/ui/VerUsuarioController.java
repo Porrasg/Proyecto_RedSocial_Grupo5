@@ -9,7 +9,10 @@ import org.example.model.Usuario;
 import org.example.model.Grupo;
 import org.example.service.RedSocialService;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 public class VerUsuarioController {
 
@@ -29,6 +32,30 @@ public class VerUsuarioController {
     private Label lblGrupoActual;
     @FXML
     private Label lblStatus;
+    // Tabla que muestra los amigos del usuario
+    @FXML
+    private TableView<Usuario> tablaAmigos;
+
+    // Tabla que muestra las sugerencias de amistad
+    @FXML
+    private TableView<Usuario> tablaSugerencias;
+
+    // Columna que muestra el username de los amigos del usuario seleccionado
+    @FXML
+    private TableColumn<Usuario, String> colUsernameAmigos;
+
+    // Columna que muestra el nombre completo de los amigos (nombre + apellidos)
+    @FXML
+    private TableColumn<Usuario, String> colNombreAmigos;
+
+    // Columna que muestra el username de las sugerencias de amistad (resultado del BFS)
+    @FXML
+    private TableColumn<Usuario, String> colUsernameSugerencias;
+
+    // Columna que muestra el nombre completo de las sugerencias de amistad
+    @FXML
+    private TableColumn<Usuario, String> colNombreSugerencias;
+
 
     // Service compartido
     private final RedSocialService service = AppState.getService();
@@ -61,6 +88,50 @@ public class VerUsuarioController {
 
         cbUsuarios.setOnAction(e -> mostrarUsuario());
 
+        // Configurar columna de username (amigos)
+        colUsernameAmigos.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleStringProperty(
+                        data.getValue().getUsername()
+                )
+        );
+
+        // Configurar columna de nombre completo (amigos)
+        colNombreAmigos.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleStringProperty(
+                        data.getValue().getPrimerNombre() + " " +
+                                data.getValue().getPrimerApellido() +
+                                (data.getValue().getSegundoApellido() != null
+                                        ? " " + data.getValue().getSegundoApellido()
+                                        : "")
+                )
+        );
+
+        // Configurar columna de username (sugerencias)
+        colUsernameSugerencias.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleStringProperty(
+                        data.getValue().getUsername()
+                )
+        );
+
+        // Configurar columna de nombre completo (sugerencias)
+        colNombreSugerencias.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleStringProperty(
+                        data.getValue().getPrimerNombre() + " " +
+                                data.getValue().getPrimerApellido() +
+                                (data.getValue().getSegundoApellido() != null
+                                        ? " " + data.getValue().getSegundoApellido()
+                                        : "")
+                )
+        );
+
+        // Mensaje para tablas vacías
+        tablaSugerencias.setPlaceholder(new Label("No hay sugerencias disponibles."));
+        tablaAmigos.setPlaceholder(new Label("No tiene amigos."));
+
+        // Evitar este espacio, se puede ajustar el ancho de las columnas
+        tablaAmigos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tablaSugerencias.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         // Carga los grupos
         List<Grupo> grupos = service.getGrupos();
         cbGrupos.getItems().setAll(grupos);
@@ -83,16 +154,47 @@ public class VerUsuarioController {
         });
     }
 
-    // Para enseñar la información del usuario seleccionado
+    // Método que carga y muestra toda la información del usuario seleccionado,
+    // incluyendo sus amigos y sugerencias de amistad obtenidas mediante BFS
     private void mostrarUsuario() {
+        // Obtenemos el usuario seleccionado del ComboBox
         Usuario u = cbUsuarios.getValue();
 
+        // Si no hay usuario seleccionado, no hacemos nada
         if (u == null) return;
+
+        // Obtenemos los usernames de los amigos del usuario
+        Set<String> amigosUsernames = service.getFriends(u.getUsername());
+
+        // Convertimos los usernames a objetos Usuario,
+        // filtramos nulos y ordenamos alfabéticamente
+        List<Usuario> amigos = amigosUsernames.stream()
+                .map(username -> service.findByUsername(username).orElse(null))
+                .filter(Objects::nonNull)
+                .sorted(Comparator.comparing(Usuario::getPrimerNombre))
+                .toList();
+
+        // Mostramos los amigos en la tabla
+        tablaAmigos.getItems().setAll(amigos);
+
+        // Obtenemos sugerencias usando BFS (amigos de amigos)
+        Set<String> sugerenciasUsernames = service.obtenerSugerenciasBFS(u.getUsername());
+
+        // Convertimos a objetos Usuario, filtramos y ordenamos
+        List<Usuario> sugerencias = sugerenciasUsernames.stream()
+                .map(username -> service.findByUsername(username).orElse(null))
+                .filter(Objects::nonNull)
+                .sorted(Comparator.comparing(Usuario::getPrimerNombre))
+                .toList();
+
+        // Mostramos las sugerencias en la tabla
+        tablaSugerencias.getItems().setAll(sugerencias);
+
 
         lblUsername.setText(u.getUsername());
         lblNombre.setText(u.getPrimerNombre());
         lblApellidos.setText(u.getPrimerApellido() + " " + u.getSegundoApellido());
-
+        // Mostramos el grupo actual del usuario
         if (u.getGrupo() != null) {
             lblGrupoActual.setText(u.getGrupo().getNombre());
             cbGrupos.setValue(u.getGrupo());

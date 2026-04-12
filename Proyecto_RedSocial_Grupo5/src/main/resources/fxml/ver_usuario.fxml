@@ -10,58 +10,84 @@
             fx:controller="org.example.ui.VerUsuarioController">
 
     <children>
+        <ScrollPane fitToWidth="true"
+                    AnchorPane.topAnchor="0"
+                    AnchorPane.bottomAnchor="0"
+                    AnchorPane.leftAnchor="0"
+                    AnchorPane.rightAnchor="0">
+            <content>
+                <VBox spacing="15">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
 
-        <VBox spacing="15"
-              AnchorPane.topAnchor="20"
-              AnchorPane.leftAnchor="20"
-              AnchorPane.rightAnchor="20">
+                    <!-- Título -->
+                    <Label text="Ver / Editar Usuario"
+                           style="-fx-font-size: 22px; -fx-font-weight: bold;" />
 
-            <!-- Título -->
-            <Label text="Ver / Editar Usuario"
-                   style="-fx-font-size: 22px; -fx-font-weight: bold;" />
+                    <!-- Selección usuario -->
+                    <HBox spacing="10">
+                        <Label text="Seleccionar usuario:" />
+                        <ComboBox fx:id="cbUsuarios" prefWidth="200"/>
+                    </HBox>
 
-            <!-- Selección  usuario -->
-            <HBox spacing="10">
-                <Label text="Seleccionar usuario:" />
-                <ComboBox fx:id="cbUsuarios" prefWidth="200"/>
-            </HBox>
+                    <!-- Info del usuario -->
+                    <GridPane hgap="10" vgap="10">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
 
-            <!-- Info del usuario -->
-            <GridPane hgap="10" vgap="10">
-                <padding>
-                    <Insets top="10" right="10" bottom="10" left="10"/>
-                </padding>
+                        <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblUsername" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <Label fx:id="lblUsername" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblNombre" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <Label fx:id="lblNombre" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        <Label text="Apellidos:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblApellidos" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-                <Label text="Apellidos:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <Label fx:id="lblApellidos" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                        <Label text="Grupo actual:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblGrupoActual" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    </GridPane>
 
-                <Label text="Grupo actual:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <Label fx:id="lblGrupoActual" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-            </GridPane>
+                    <!-- Cambio de grupo -->
+                    <HBox spacing="10">
+                        <Label text="Asignar grupo:" />
+                        <ComboBox fx:id="cbGrupos" prefWidth="200"/>
+                    </HBox>
 
-            <!-- Cambio de grupo -->
-            <HBox spacing="10">
-                <Label text="Asignar grupo:" />
-                <ComboBox fx:id="cbGrupos" prefWidth="200"/>
-            </HBox>
+                    <!-- TABLA AMIGOS -->
+                    <Label text="Amigos:" />
 
-            <!-- Botones -->
-            <HBox spacing="10">
-                <Button text="Guardar cambios" onAction="#onGuardar"/>
-                <Button text="Volver" onAction="#onVolver"/>
-            </HBox>
+                    <TableView fx:id="tablaAmigos" prefHeight="150.0">
+                        <columns>
+                            <TableColumn fx:id="colUsernameAmigos" text="Username" prefWidth="150"/>
+                            <TableColumn fx:id="colNombreAmigos" text="Nombre completo" prefWidth="300"/>
+                        </columns>
+                    </TableView>
 
-            <!-- Estado -->
-            <Label fx:id="lblStatus" textFill="green"/>
+                    <!-- TABLA SUGERENCIAS -->
+                    <Label text="Sugerencias de amistad:" />
 
-        </VBox>
+                    <TableView fx:id="tablaSugerencias" prefHeight="150.0">
+                        <columns>
+                            <TableColumn fx:id="colUsernameSugerencias" text="Username" prefWidth="150"/>
+                            <TableColumn fx:id="colNombreSugerencias" text="Nombre completo" prefWidth="300"/>
+                        </columns>
+                    </TableView>
 
+                    <!-- Botones -->
+                    <HBox spacing="10">
+                        <Button text="Guardar cambios" onAction="#onGuardar"/>
+                        <Button text="Volver" onAction="#onVolver"/>
+                    </HBox>
+
+                    <!-- Estado -->
+                    <Label fx:id="lblStatus" textFill="green"/>
+
+                </VBox>
+            </content>
+        </ScrollPane>
     </children>
 
 </AnchorPane>

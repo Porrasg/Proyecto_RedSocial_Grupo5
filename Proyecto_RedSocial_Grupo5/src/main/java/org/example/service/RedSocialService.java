@@ -87,6 +87,63 @@ public class RedSocialService {
         return Collections.unmodifiableSet(new HashSet<>(grafo.getAmigos(key)));
     }
 
+    // Genera sugerencias de amistad utilizando el algoritmo BFS (Búsqueda en Anchura).
+    public Set<String> obtenerSugerenciasBFS(String username) {
+
+        // Normalizamos el username
+        String usuarioInicial = norm(username);
+
+        // Validamos que el usuario exista
+        if (usuarioInicial == null || !usuarios.containsKey(usuarioInicial)) {
+            return Set.of();
+        }
+
+        // Conjunto donde se guardarán las sugerencias
+        Set<String> sugerencias = new HashSet<>();
+
+        // Obtenemos los amigos directos (para excluirlos)
+        Set<String> amigosDirectos = getFriends(usuarioInicial);
+
+        // Cola para el recorrido BFS
+        Queue<String> cola = new LinkedList<>();
+
+        // Conjunto para marcar los usuarios visitados
+        Set<String> visitados = new HashSet<>();
+
+        // Iniciamos el recorrido desde el usuario
+        cola.add(usuarioInicial);
+        visitados.add(usuarioInicial);
+
+        // Mientras haya usuarios en la cola
+        while (!cola.isEmpty()) {
+
+            // Sacamos el siguiente usuario
+            String actual = cola.poll();
+
+            // Recorremos sus amigos
+            for (String amigo : grafo.getAmigos(actual)) {
+
+                // Si no ha sido visitado
+                if (!visitados.contains(amigo)) {
+
+                    // Lo marcamos como visitado y lo agregamos a la cola
+                    visitados.add(amigo);
+                    cola.add(amigo);
+
+                    // Aplicamos reglas de filtrado
+                    if (!amigo.equals(usuarioInicial) &&
+                            !amigosDirectos.contains(amigo)) {
+
+                        sugerencias.add(amigo);
+                    }
+                }
+            }
+        }
+
+        // Retornamos las sugerencias sin duplicados
+        return sugerencias;
+    }
+
     // Retorna todos los usuarios registrados ordenados alfabéticamente.
     public List<Usuario> getAllUsers() {
         return usuarios.values().stream()
