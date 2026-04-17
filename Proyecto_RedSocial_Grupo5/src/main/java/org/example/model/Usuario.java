@@ -18,6 +18,9 @@ public class Usuario {
     // Grupo al que pertenece el usuario (puede asignarse después)
     private Grupo grupo;
 
+    // Lista de amigos del usuario
+    private java.util.List<Usuario> amigos = new java.util.ArrayList<>();
+
     // Constructor para crear un nuevo usuario
     public Usuario(String username,
                    String password,
@@ -68,6 +71,27 @@ public class Usuario {
         return grupo;
     } // Obtener el grupo del usuario
 
+    // Obtener lista de amigos
+    public java.util.List<Usuario> getAmigos() {
+        return amigos;
+    }
+
+    // Agregar amigo
+    public void agregarAmigo(Usuario amigo) {
+        if (amigo != null && !amigos.contains(amigo) && !amigo.equals(this)) {
+            amigos.add(amigo);
+        }
+    }
+
+    // Eliminar amigo
+    public void eliminarAmigo(Usuario amigo) {
+        amigos.remove(amigo);
+    }
+
+    // Cantidad de amigos (para función extra)
+    public int getCantidadAmigos() {
+        return amigos.size();
+    }
 
     // Asignar o cambiar el grupo del usuario
     public void setGrupo(Grupo grupo) {

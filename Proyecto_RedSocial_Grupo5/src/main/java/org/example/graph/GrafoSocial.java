@@ -52,7 +52,7 @@ public class GrafoSocial {
     // Obtiene la lista de amigos de un usuario. Si el usuario no existe, retorna un conjunto vacío.
     public Set<String> getAmigos(String username) {
         String key = norm(username);
-        return relaciones.getOrDefault(key, new HashSet<>());
+        return Collections.unmodifiableSet(relaciones.getOrDefault(key, Collections.emptySet()));
     }
 
     // Retorna todas las relaciones del grafo.

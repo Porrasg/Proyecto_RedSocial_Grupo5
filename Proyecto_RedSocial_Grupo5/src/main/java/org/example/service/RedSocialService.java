@@ -64,12 +64,19 @@ public class RedSocialService {
             throw new IllegalArgumentException("Usuario no existe.");
         }
 
-        //  Esto evita duplicados
         if (grafo.getAmigos(a).contains(b)) {
             throw new IllegalArgumentException("La amistad ya existe.");
         }
 
+        //Grafo
         grafo.addAmistad(a, b);
+
+        //sincronizar con Usuario
+        Usuario u1 = usuarios.get(a);
+        Usuario u2 = usuarios.get(b);
+
+        u1.agregarAmigo(u2);
+        u2.agregarAmigo(u1);
     }
 
     // Elimina una relación de amistad entre dos usuarios.
@@ -77,7 +84,18 @@ public class RedSocialService {
         String a = norm(userA);
         String b = norm(userB);
         if (a == null || b == null) return;
+
+        //Grafo
         grafo.removeAmistad(a, b);
+
+        //sincronizar con Usuario
+        Usuario u1 = usuarios.get(a);
+        Usuario u2 = usuarios.get(b);
+
+        if (u1 != null && u2 != null) {
+            u1.eliminarAmigo(u2);
+            u2.eliminarAmigo(u1);
+        }
     }
 
     // Obtiene los amigos de un usuario.
@@ -187,6 +205,19 @@ public class RedSocialService {
         // Usamos unmodifiableList para evitar que otra parte del programa haga: service.getGrupos().clear(); y borre todos los grupos.
         return Collections.unmodifiableList(grupos);
     }
+    // Obtener usuario con más amigos
+    public Usuario obtenerUsuarioConMasAmigos() {
+        if (usuarios.isEmpty()) return null;
 
+        Usuario mayor = null;
+
+        for (Usuario u : usuarios.values()) {
+            if (mayor == null || u.getCantidadAmigos() > mayor.getCantidadAmigos()) {
+                mayor = u;
+            }
+        }
+
+        return mayor;
+    }
 
 }

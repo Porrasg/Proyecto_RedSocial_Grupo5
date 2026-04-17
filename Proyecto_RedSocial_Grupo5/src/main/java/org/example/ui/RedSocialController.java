@@ -34,6 +34,8 @@ public class RedSocialController implements Initializable {
     // Panel donde se dibuja el grafo
     @FXML
     private AnchorPane graphPane;
+    @FXML
+    private Label lblInstrucciones;
 
     // Servicio que contiene la lógica de la red social
     private final RedSocialService service = AppState.getService();
@@ -65,6 +67,9 @@ public class RedSocialController implements Initializable {
     // Método que se ejecuta al cargar la vista.
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        if (lblInstrucciones != null) {
+            lblInstrucciones.setText("Click izquierdo: crear amistad | Click derecho: eliminar amistad");
+        }
         renderGraph();
     }
 
@@ -119,26 +124,28 @@ public class RedSocialController implements Initializable {
         }
 
         // Dibujar conexiones
+        Set<String> drawn = new HashSet<>();
+
         for (Usuario user : users) {
             String fromUser = user.getUsername();
-
-            // Obtener amigos
             Set<String> friends = service.getFriends(fromUser);
 
-            if (friends == null || friends.isEmpty()) {
-                continue;
-            }
+            if (friends == null || friends.isEmpty()) continue;
 
-            for (Object toUser : friends) {
+            for (String toUser : friends) {
+
+                //Clave única para evitar duplicados
+                String key = fromUser.compareToIgnoreCase(toUser) < 0
+                        ? fromUser + "-" + toUser
+                        : toUser + "-" + fromUser;
+
+                if (drawn.contains(key)) continue;
+
                 Circle from = nodeByUsername.get(fromUser);
                 Circle to = nodeByUsername.get(toUser);
 
-                // Validación de seguridad
-                if (from == null || to == null) {
-                    continue;
-                }
+                if (from == null || to == null) continue;
 
-                // Crear línea entre nodos
                 Line line = new Line(
                         from.getCenterX(),
                         from.getCenterY(),
@@ -148,8 +155,8 @@ public class RedSocialController implements Initializable {
 
                 line.setStrokeWidth(2);
 
-                // Se agrega al fondo
                 graphPane.getChildren().add(0, line);
+                drawn.add(key);
             }
         }
     }
@@ -244,7 +251,7 @@ public class RedSocialController implements Initializable {
                 showAlert(
                   Alert.AlertType.INFORMATION,
                   "Amistad eliminada",
-                  selectedUser + " amistad eliminada con " + clicked
+                        "Se eliminó la amistad entre " + selectedUser + " y " + clicked
                 );
             }
             // Resetear selección y redibujar
@@ -324,5 +331,20 @@ public class RedSocialController implements Initializable {
         a.setHeaderText(null);
         a.setContentText(msg);
         a.showAndWait();
+    }
+    @FXML
+    private void mostrarUsuarioConMasAmigos() {
+        Usuario u = service.obtenerUsuarioConMasAmigos();
+
+        if (u == null) {
+            showAlert(Alert.AlertType.INFORMATION, "Resultado", "No hay usuarios.");
+            return;
+        }
+
+        showAlert(
+                Alert.AlertType.INFORMATION,
+                "Usuario con más amigos",
+                u.getUsername() + " tiene " + u.getCantidadAmigos() + " amigos."
+        );
     }
 }
