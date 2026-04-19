@@ -33,6 +33,13 @@ public class MenuController {
     private void irVerUsuario(ActionEvent event) throws IOException {
         cambiarPantalla(event, "/fxml/ver_usuario.fxml");
     }
+
+    // Navega a la pantalla de visualizacion de amigos en común
+    @FXML
+    private void irAmigosComun(ActionEvent event) throws IOException {
+        cambiarPantalla(event, "/fxml/amigos_comun.fxml");
+    }
+
     // Cierra completamente la aplicación.
     @FXML
     private void salir() {
@@ -41,17 +48,16 @@ public class MenuController {
 
     // Método reutilizable para cambiar de pantalla.
     private void cambiarPantalla(ActionEvent event, String rutaFXML) throws IOException {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
-        Scene scene = new Scene(loader.load(), 900, 600); //Tamaño fijo de la pantalla
 
+        // Cargar el nuevo contenido
+        javafx.scene.Parent root = loader.load();
+
+        // Obtener el stage actual
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
 
-        stage.setWidth(900);
-        stage.setHeight(600);
-
-        stage.setResizable(false); // evita que cambie tamaño
-
-        stage.show();
+        // Solo cambiar el contenido, no la escena
+        stage.getScene().setRoot(root);
     }
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+<!--
+    Vista de Amigos en común.
+    Permite seleccionar dos usuarios y visualizar los amigos que ambos comparten.
+-->
+
+<VBox spacing="15"
+      alignment="TOP_LEFT"
+      prefWidth="900"
+      prefHeight="600"
+      fillWidth="true"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.ui.AmigosComunController">
+
+    <!-- Espaciado interno -->
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16"/>
+    </padding>
+
+    <!-- Título -->
+    <Label text="Amigos en común"
+           style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <!-- Usuario 1 -->
+    <HBox spacing="10">
+        <Label text="Usuario 1:" />
+        <ComboBox fx:id="cbUsuario1" prefWidth="200"/>
+    </HBox>
+
+    <!-- Usuario 2 -->
+    <HBox spacing="10">
+        <Label text="Usuario 2:" />
+        <ComboBox fx:id="cbUsuario2" prefWidth="200"/>
+    </HBox>
+
+    <!-- Botón buscar -->
+    <Button text="Buscar amigos en común"
+            onAction="#onBuscar"/>
+
+    <!-- Tabla -->
+    <TableView fx:id="tablaComunes" prefHeight="300">
+        <columns>
+            <TableColumn fx:id="colUsername" text="Username"/>
+            <TableColumn fx:id="colNombre" text="Nombre completo"/>
+        </columns>
+    </TableView>
+
+    <!-- Botón volver -->
+    <Button text="Volver" onAction="#onVolver"/>
+
+</VBox>

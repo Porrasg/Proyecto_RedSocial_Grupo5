@@ -25,7 +25,8 @@
     <Button text="1. Crear Usuario" onAction="#irCrearUsuario" prefWidth="200"/>
     <Button text="2. Crear Grupo" onAction="#irCrearGrupo" prefWidth="200"/>
     <Button text="3. Ver Red Social" onAction="#irRedSocial" prefWidth="200"/>
-    <Button text="4. Ver / Editar Usuario" onAction="#irVerUsuario" prefWidth="200"/>
-    <Button text="5. Salir" onAction="#salir" prefWidth="200"/>
+    <Button text="4. Ver/Editar Usuario" onAction="#irVerUsuario" prefWidth="200"/>
+    <Button text="5. Amigos en común" onAction="#irAmigosComun" prefWidth="200"/>
+    <Button text="6. Salir" onAction="#salir" prefWidth="200"/>
 
 </VBox>

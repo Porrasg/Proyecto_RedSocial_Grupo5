@@ -220,4 +220,28 @@ public class RedSocialService {
         return mayor;
     }
 
+    // Funcionalidad extra propia del proyecto
+    // Amigos en Común
+    public Set<String> amigosEnComun(String userA, String userB) {
+
+        String a = norm(userA);
+        String b = norm(userB);
+
+        if (a == null || b == null) return Set.of();
+
+        if (!usuarios.containsKey(a) || !usuarios.containsKey(b)) {
+            throw new IllegalArgumentException("Usuario no existe.");
+        }
+
+        // Obtener amigos de ambos
+        Set<String> amigosA = grafo.getAmigos(a);
+        Set<String> amigosB = grafo.getAmigos(b);
+
+        // Intersección
+        Set<String> comunes = new HashSet<>(amigosA);
+        comunes.retainAll(amigosB);
+
+        return comunes;
+    }
+
 }

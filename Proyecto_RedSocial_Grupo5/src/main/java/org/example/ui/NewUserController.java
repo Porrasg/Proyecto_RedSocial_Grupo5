@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import org.example.ui.AvatarUtils;
 import java.io.IOException;
+import java.time.LocalDate;
 
 // Controlador de la vista Nuevo Usuario
 public class NewUserController {
@@ -57,17 +58,18 @@ public class NewUserController {
     // Maneja el botón Guardar
     @FXML
     private void onGuardar() {
+
         try {
-            // 1) Leer inputs
+            // 1. Leer datos
             String username = txtUsername.getText();
             String password = txtPassword.getText();
             String primerNombre = txtPrimerNombre.getText();
             String primerApellido = txtPrimerApellido.getText();
             String segundoApellido = txtSegundoApellido.getText();
-            var fechaNacimiento = dpFechaNacimiento.getValue();
+            LocalDate fechaNacimiento = dpFechaNacimiento.getValue();
             AvatarType avatar = cbAvatar.getValue();
 
-            // 2) Validar
+            // 2. VALIDAR TODO (si algo falla lanza error y se detiene)
             UserValidator.requireNotBlank(username, "Usuario");
             UserValidator.validatePassword(password);
             UserValidator.requireNotBlank(primerNombre, "Primer Nombre");
@@ -75,7 +77,11 @@ public class NewUserController {
             UserValidator.requireNotBlank(segundoApellido, "Segundo Apellido");
             UserValidator.validateBirthDate(fechaNacimiento);
 
-            // 3) Crear usuario
+            if (service.existsUsername(username)) {
+                throw new IllegalArgumentException("Ese usuario ya existe.");
+            }
+
+            // 3. CREAR solo si TODO está bien
             Usuario u = new Usuario(
                     username.trim(),
                     password,
@@ -86,20 +92,15 @@ public class NewUserController {
                     avatar
             );
 
-            // 4) Registrar en memoria
             service.addUser(u);
 
-            // 5) Feedback
             showInfo("Usuario creado", "Se creó el usuario: " + u.getUsername());
             lblStatus.setText("Usuario creado correctamente.");
             onLimpiar();
 
         } catch (IllegalArgumentException ex) {
             showError("Validación", ex.getMessage());
-            lblStatus.setText(" " + ex.getMessage());
-        } catch (Exception ex) {
-            showError("Error inesperado", "Ocurrió un error inesperado: " + ex.getMessage());
-            lblStatus.setText("Error inesperado.");
+            lblStatus.setText(ex.getMessage());
         }
     }
 
